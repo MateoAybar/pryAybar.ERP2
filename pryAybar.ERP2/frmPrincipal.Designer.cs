@@ -46,6 +46,7 @@ namespace pryAybar.ERP2
             this.txtAgDomNombre = new System.Windows.Forms.TextBox();
             this.lblAgDomNombre = new System.Windows.Forms.Label();
             this.grpAgContacto = new System.Windows.Forms.GroupBox();
+            this.txtAgCelular = new System.Windows.Forms.MaskedTextBox();
             this.btnAgRemoveRed = new System.Windows.Forms.Button();
             this.btnAgAddRed = new System.Windows.Forms.Button();
             this.dgvAgRedes = new System.Windows.Forms.DataGridView();
@@ -135,7 +136,6 @@ namespace pryAybar.ERP2
             this.lblConDetails = new System.Windows.Forms.Label();
             this.lblConStatus = new System.Windows.Forms.Label();
             this.pnlConStatusIndicator = new System.Windows.Forms.Panel();
-            this.txtAgCelular = new System.Windows.Forms.MaskedTextBox();
             this.pnlSidebar.SuspendLayout();
             this.pnlHeader.SuspendLayout();
             this.pnlContent.SuspendLayout();
@@ -331,6 +331,7 @@ namespace pryAybar.ERP2
             this.pnlHeader.Name = "pnlHeader";
             this.pnlHeader.Size = new System.Drawing.Size(780, 60);
             this.pnlHeader.TabIndex = 1;
+            this.pnlHeader.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlHeader_Paint);
             // 
             // lblHeaderTitle
             // 
@@ -565,6 +566,14 @@ namespace pryAybar.ERP2
             this.grpAgContacto.TabIndex = 1;
             this.grpAgContacto.TabStop = false;
             this.grpAgContacto.Text = "Contacto";
+            // 
+            // txtAgCelular
+            // 
+            this.txtAgCelular.Location = new System.Drawing.Point(15, 45);
+            this.txtAgCelular.Mask = "000-000-0000";
+            this.txtAgCelular.Name = "txtAgCelular";
+            this.txtAgCelular.Size = new System.Drawing.Size(360, 24);
+            this.txtAgCelular.TabIndex = 10;
             // 
             // btnAgRemoveRed
             // 
@@ -1622,14 +1631,6 @@ namespace pryAybar.ERP2
             this.pnlConStatusIndicator.Size = new System.Drawing.Size(100, 100);
             this.pnlConStatusIndicator.TabIndex = 0;
             this.pnlConStatusIndicator.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlConStatusIndicator_Paint);
-            // 
-            // txtAgCelular
-            // 
-            this.txtAgCelular.Location = new System.Drawing.Point(15, 45);
-            this.txtAgCelular.Mask = "000-000-0000";
-            this.txtAgCelular.Name = "txtAgCelular";
-            this.txtAgCelular.Size = new System.Drawing.Size(360, 24);
-            this.txtAgCelular.TabIndex = 10;
             // 
             // frmPrincipal
             // 

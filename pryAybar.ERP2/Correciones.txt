@@ -1,0 +1,8 @@
+﻿USURIO Y CONTRASEÑA : Primer Letra del nombre y el primer apellido / Constraseña = DNI
+VALIDACIONES :
+Gneral = Marca en rojo la casilla donde ocurrio el error para que el usuario puda identificar, Fijarse que todos los datos agregardos se guraden en la base de datos, fijarse que la ventana se puede minimizar
+contraseña = No peude tener mas de 8 caracteristicas, no peude contener letars, 
+Usuario = No peude tener mas de 15 caracteristicas, no puede contener numeros  
+Agregar Usuario = Mostar contraseña, dni 7 u 8 caracteristicas, gmail tiene que tener un cmb con los diferentes tipo de gmail pre cargado, numero de telefono tiene que ser +54, la cmb localidades solo de desbloquea si cmb provincias es cordoba, domicilio min. 7 caracteristicas, numero solo numeros,
+Editar Usuario = la cmb de elegir usuario tiene que tener un buscador por nombre para ser mas facil la busqueda, la dvg datos actuales tiene que mostar el numero de telefono, 
+Auditoria = Un control de busqueda por DNI y usuario, fecha y hora 

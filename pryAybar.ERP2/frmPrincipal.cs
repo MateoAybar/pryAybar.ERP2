@@ -758,5 +758,10 @@ namespace pryAybar.ERP2
                 e.Graphics.DrawEllipse(pen, x, y, circleSize, circleSize);
             }
         }
+
+        private void pnlHeader_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
