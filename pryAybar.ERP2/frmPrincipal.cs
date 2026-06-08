@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 using pryAybar.ERP2.CLS;
 
 namespace pryAybar.ERP2
@@ -312,7 +313,7 @@ namespace pryAybar.ERP2
 
             try
             {
-                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                Process.Start(new ProcessStartInfo
                 {
                     FileName = link,
                     UseShellExecute = true
