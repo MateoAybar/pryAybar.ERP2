@@ -101,7 +101,7 @@
   <ItemGroup>
     <Content Include="Resourse\5047695862728941846.ico" />
     <Content Include="BD\Aybar1.accdb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Correciones.txt" />
   </ItemGroup>

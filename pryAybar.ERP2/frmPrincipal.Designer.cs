@@ -21,6 +21,11 @@ namespace pryAybar.ERP2
             this.lblSessionPerfil = new System.Windows.Forms.Label();
             this.lblSessionUser = new System.Windows.Forms.Label();
             this.pnlSessionDivider = new System.Windows.Forms.Panel();
+            this.lblEdActApe = new System.Windows.Forms.Label();
+            this.lblEdActPass = new System.Windows.Forms.Label();
+            this.lblEdActDNI = new System.Windows.Forms.Label();
+            this.lblEdActNom = new System.Windows.Forms.Label();
+            this.lblEdActCelular = new System.Windows.Forms.Label();
             this.btnNavSalir = new System.Windows.Forms.Button();
             this.btnNavCerrarSesion = new System.Windows.Forms.Button();
             this.btnNavEstadoConex = new System.Windows.Forms.Button();
@@ -62,7 +67,9 @@ namespace pryAybar.ERP2
             this.lblAgProvincia = new System.Windows.Forms.Label();
             this.cmbAgPerfil = new System.Windows.Forms.ComboBox();
             this.lblAgPerfil = new System.Windows.Forms.Label();
-            this.txtAgMail = new System.Windows.Forms.TextBox();
+            this.txtAgMailLocal = new System.Windows.Forms.TextBox();
+            this.cmbAgMailDominio = new System.Windows.Forms.ComboBox();
+            this.chkAgMostrarPass = new System.Windows.Forms.CheckBox();
             this.lblAgMail = new System.Windows.Forms.Label();
             this.txtAgPassword = new System.Windows.Forms.TextBox();
             this.lblAgPassword = new System.Windows.Forms.Label();
@@ -99,7 +106,8 @@ namespace pryAybar.ERP2
             this.grpEdNuevosDatos = new System.Windows.Forms.GroupBox();
             this.cmbEdPerfil = new System.Windows.Forms.ComboBox();
             this.lblEdPerfil = new System.Windows.Forms.Label();
-            this.txtEdMail = new System.Windows.Forms.TextBox();
+            this.txtEdMailLocal = new System.Windows.Forms.TextBox();
+            this.cmbEdMailDominio = new System.Windows.Forms.ComboBox();
             this.lblEdMail = new System.Windows.Forms.Label();
             this.txtEdPassword = new System.Windows.Forms.TextBox();
             this.lblEdPassword = new System.Windows.Forms.Label();
@@ -120,8 +128,9 @@ namespace pryAybar.ERP2
             this.lblEdActMail = new System.Windows.Forms.Label();
             this.lblEdActPass = new System.Windows.Forms.Label();
             this.lblEdActDNI = new System.Windows.Forms.Label();
-            this.lblEdActApe = new System.Windows.Forms.Label();
             this.lblEdActNom = new System.Windows.Forms.Label();
+            this.lblEdActCelular = new System.Windows.Forms.Label();
+            this.lblEdActCelularVal = new System.Windows.Forms.Label();
             this.pnlEdSeleccionar = new System.Windows.Forms.Panel();
             this.cmbEdSeleccionar = new System.Windows.Forms.ComboBox();
             this.lblEdSeleccionar = new System.Windows.Forms.Label();
@@ -130,6 +139,10 @@ namespace pryAybar.ERP2
             this.pnlAuditoriaHeader = new System.Windows.Forms.Panel();
             this.btnAudRefrescar = new System.Windows.Forms.Button();
             this.lblAudTitle = new System.Windows.Forms.Label();
+            this.txtAudBuscar = new System.Windows.Forms.TextBox();
+            this.lblAudBuscar = new System.Windows.Forms.Label();
+            this.dtpAudFecha = new System.Windows.Forms.DateTimePicker();
+            this.chkAudFiltrarFecha = new System.Windows.Forms.CheckBox();
             this.pnlEstadoConex = new System.Windows.Forms.Panel();
             this.pnlConCard = new System.Windows.Forms.Panel();
             this.btnConReconectar = new System.Windows.Forms.Button();
@@ -682,7 +695,9 @@ namespace pryAybar.ERP2
             this.grpAgPersonales.Controls.Add(this.lblAgProvincia);
             this.grpAgPersonales.Controls.Add(this.cmbAgPerfil);
             this.grpAgPersonales.Controls.Add(this.lblAgPerfil);
-            this.grpAgPersonales.Controls.Add(this.txtAgMail);
+            this.grpAgPersonales.Controls.Add(this.txtAgMailLocal);
+            this.grpAgPersonales.Controls.Add(this.cmbAgMailDominio);
+            this.grpAgPersonales.Controls.Add(this.chkAgMostrarPass);
             this.grpAgPersonales.Controls.Add(this.lblAgMail);
             this.grpAgPersonales.Controls.Add(this.txtAgPassword);
             this.grpAgPersonales.Controls.Add(this.lblAgPassword);
@@ -764,13 +779,35 @@ namespace pryAybar.ERP2
             this.lblAgPerfil.TabIndex = 10;
             this.lblAgPerfil.Text = "Perfil:";
             // 
-            // txtAgMail
+            // txtAgMailLocal
             // 
-            this.txtAgMail.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAgMail.Location = new System.Drawing.Point(20, 287);
-            this.txtAgMail.Name = "txtAgMail";
-            this.txtAgMail.Size = new System.Drawing.Size(300, 23);
-            this.txtAgMail.TabIndex = 9;
+            this.txtAgMailLocal.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAgMailLocal.Location = new System.Drawing.Point(20, 287);
+            this.txtAgMailLocal.Name = "txtAgMailLocal";
+            this.txtAgMailLocal.Size = new System.Drawing.Size(165, 23);
+            this.txtAgMailLocal.TabIndex = 9;
+            // 
+            // cmbAgMailDominio
+            // 
+            this.cmbAgMailDominio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbAgMailDominio.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbAgMailDominio.FormattingEnabled = true;
+            this.cmbAgMailDominio.Location = new System.Drawing.Point(190, 287);
+            this.cmbAgMailDominio.Name = "cmbAgMailDominio";
+            this.cmbAgMailDominio.Size = new System.Drawing.Size(130, 23);
+            this.cmbAgMailDominio.TabIndex = 17;
+            // 
+            // chkAgMostrarPass
+            // 
+            this.chkAgMostrarPass.AutoSize = true;
+            this.chkAgMostrarPass.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkAgMostrarPass.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(120)))), ((int)(((byte)(135)))));
+            this.chkAgMostrarPass.Location = new System.Drawing.Point(20, 260);
+            this.chkAgMostrarPass.Name = "chkAgMostrarPass";
+            this.chkAgMostrarPass.Size = new System.Drawing.Size(120, 19);
+            this.chkAgMostrarPass.TabIndex = 18;
+            this.chkAgMostrarPass.Text = "Mostrar contraseña";
+            this.chkAgMostrarPass.CheckedChanged += new System.EventHandler(this.chkAgMostrarPass_CheckedChanged);
             // 
             // lblAgMail
             // 
@@ -1182,7 +1219,8 @@ namespace pryAybar.ERP2
             this.grpEdNuevosDatos.BackColor = System.Drawing.Color.White;
             this.grpEdNuevosDatos.Controls.Add(this.cmbEdPerfil);
             this.grpEdNuevosDatos.Controls.Add(this.lblEdPerfil);
-            this.grpEdNuevosDatos.Controls.Add(this.txtEdMail);
+            this.grpEdNuevosDatos.Controls.Add(this.txtEdMailLocal);
+            this.grpEdNuevosDatos.Controls.Add(this.cmbEdMailDominio);
             this.grpEdNuevosDatos.Controls.Add(this.lblEdMail);
             this.grpEdNuevosDatos.Controls.Add(this.txtEdPassword);
             this.grpEdNuevosDatos.Controls.Add(this.lblEdPassword);
@@ -1222,13 +1260,23 @@ namespace pryAybar.ERP2
             this.lblEdPerfil.TabIndex = 10;
             this.lblEdPerfil.Text = "Perfil:";
             // 
-            // txtEdMail
+            // txtEdMailLocal
             // 
-            this.txtEdMail.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEdMail.Location = new System.Drawing.Point(20, 195);
-            this.txtEdMail.Name = "txtEdMail";
-            this.txtEdMail.Size = new System.Drawing.Size(140, 23);
-            this.txtEdMail.TabIndex = 9;
+            this.txtEdMailLocal.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtEdMailLocal.Location = new System.Drawing.Point(20, 195);
+            this.txtEdMailLocal.Name = "txtEdMailLocal";
+            this.txtEdMailLocal.Size = new System.Drawing.Size(80, 23);
+            this.txtEdMailLocal.TabIndex = 9;
+            // 
+            // cmbEdMailDominio
+            // 
+            this.cmbEdMailDominio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbEdMailDominio.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbEdMailDominio.FormattingEnabled = true;
+            this.cmbEdMailDominio.Location = new System.Drawing.Point(105, 195);
+            this.cmbEdMailDominio.Name = "cmbEdMailDominio";
+            this.cmbEdMailDominio.Size = new System.Drawing.Size(115, 23);
+            this.cmbEdMailDominio.TabIndex = 19;
             // 
             // lblEdMail
             // 
@@ -1326,12 +1374,14 @@ namespace pryAybar.ERP2
             this.grpEdActuales.Controls.Add(this.lblEdActDNIVal);
             this.grpEdActuales.Controls.Add(this.lblEdActApeVal);
             this.grpEdActuales.Controls.Add(this.lblEdActNomVal);
+            this.grpEdActuales.Controls.Add(this.lblEdActCelularVal);
             this.grpEdActuales.Controls.Add(this.lblEdActPerfil);
             this.grpEdActuales.Controls.Add(this.lblEdActMail);
             this.grpEdActuales.Controls.Add(this.lblEdActPass);
             this.grpEdActuales.Controls.Add(this.lblEdActDNI);
             this.grpEdActuales.Controls.Add(this.lblEdActApe);
             this.grpEdActuales.Controls.Add(this.lblEdActNom);
+            this.grpEdActuales.Controls.Add(this.lblEdActCelular);
             this.grpEdActuales.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpEdActuales.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(120)))), ((int)(((byte)(135)))));
             this.grpEdActuales.Location = new System.Drawing.Point(20, 60);
@@ -1467,6 +1517,27 @@ namespace pryAybar.ERP2
             this.lblEdActNom.TabIndex = 0;
             this.lblEdActNom.Text = "Nombre:";
             // 
+            // lblEdActCelular
+            // 
+            this.lblEdActCelular.AutoSize = true;
+            this.lblEdActCelular.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEdActCelular.Location = new System.Drawing.Point(15, 205);
+            this.lblEdActCelular.Name = "lblEdActCelular";
+            this.lblEdActCelular.Size = new System.Drawing.Size(60, 15);
+            this.lblEdActCelular.TabIndex = 12;
+            this.lblEdActCelular.Text = "Celular:";
+            // 
+            // lblEdActCelularVal
+            // 
+            this.lblEdActCelularVal.AutoSize = true;
+            this.lblEdActCelularVal.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEdActCelularVal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
+            this.lblEdActCelularVal.Location = new System.Drawing.Point(100, 205);
+            this.lblEdActCelularVal.Name = "lblEdActCelularVal";
+            this.lblEdActCelularVal.Size = new System.Drawing.Size(12, 15);
+            this.lblEdActCelularVal.TabIndex = 13;
+            this.lblEdActCelularVal.Text = "-";
+            // 
             // pnlEdSeleccionar
             // 
             this.pnlEdSeleccionar.BackColor = System.Drawing.Color.White;
@@ -1529,11 +1600,15 @@ namespace pryAybar.ERP2
             // 
             this.pnlAuditoriaHeader.BackColor = System.Drawing.Color.White;
             this.pnlAuditoriaHeader.Controls.Add(this.btnAudRefrescar);
+            this.pnlAuditoriaHeader.Controls.Add(this.chkAudFiltrarFecha);
+            this.pnlAuditoriaHeader.Controls.Add(this.dtpAudFecha);
+            this.pnlAuditoriaHeader.Controls.Add(this.lblAudBuscar);
+            this.pnlAuditoriaHeader.Controls.Add(this.txtAudBuscar);
             this.pnlAuditoriaHeader.Controls.Add(this.lblAudTitle);
             this.pnlAuditoriaHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlAuditoriaHeader.Location = new System.Drawing.Point(0, 0);
             this.pnlAuditoriaHeader.Name = "pnlAuditoriaHeader";
-            this.pnlAuditoriaHeader.Size = new System.Drawing.Size(780, 50);
+            this.pnlAuditoriaHeader.Size = new System.Drawing.Size(780, 80);
             this.pnlAuditoriaHeader.TabIndex = 0;
             // 
             // btnAudRefrescar
@@ -1562,6 +1637,48 @@ namespace pryAybar.ERP2
             this.lblAudTitle.Size = new System.Drawing.Size(231, 20);
             this.lblAudTitle.TabIndex = 0;
             this.lblAudTitle.Text = "Auditoría de Accesos al Sistema";
+            // 
+            // txtAudBuscar
+            // 
+            this.txtAudBuscar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAudBuscar.Location = new System.Drawing.Point(270, 45);
+            this.txtAudBuscar.Name = "txtAudBuscar";
+            this.txtAudBuscar.Size = new System.Drawing.Size(200, 23);
+            this.txtAudBuscar.TabIndex = 2;
+            this.txtAudBuscar.TextChanged += new System.EventHandler(this.txtAudBuscar_TextChanged);
+            // 
+            // lblAudBuscar
+            // 
+            this.lblAudBuscar.AutoSize = true;
+            this.lblAudBuscar.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAudBuscar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(120)))), ((int)(((byte)(135)))));
+            this.lblAudBuscar.Location = new System.Drawing.Point(270, 28);
+            this.lblAudBuscar.Name = "lblAudBuscar";
+            this.lblAudBuscar.TabIndex = 5;
+            this.lblAudBuscar.Text = "Buscar:";
+            // 
+            // chkAudFiltrarFecha
+            // 
+            this.chkAudFiltrarFecha.AutoSize = true;
+            this.chkAudFiltrarFecha.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkAudFiltrarFecha.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(120)))), ((int)(((byte)(135)))));
+            this.chkAudFiltrarFecha.Location = new System.Drawing.Point(480, 45);
+            this.chkAudFiltrarFecha.Name = "chkAudFiltrarFecha";
+            this.chkAudFiltrarFecha.Size = new System.Drawing.Size(100, 19);
+            this.chkAudFiltrarFecha.TabIndex = 3;
+            this.chkAudFiltrarFecha.Text = "Filtrar por fecha";
+            this.chkAudFiltrarFecha.CheckedChanged += new System.EventHandler(this.chkAudFiltrarFecha_CheckedChanged);
+            // 
+            // dtpAudFecha
+            // 
+            this.dtpAudFecha.Enabled = false;
+            this.dtpAudFecha.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpAudFecha.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpAudFecha.Location = new System.Drawing.Point(590, 45);
+            this.dtpAudFecha.Name = "dtpAudFecha";
+            this.dtpAudFecha.Size = new System.Drawing.Size(150, 23);
+            this.dtpAudFecha.TabIndex = 4;
+            this.dtpAudFecha.ValueChanged += new System.EventHandler(this.dtpAudFecha_ValueChanged);
             // 
             // pnlEstadoConex
             // 
@@ -1641,7 +1758,7 @@ namespace pryAybar.ERP2
             this.Controls.Add(this.pnlContent);
             this.Controls.Add(this.pnlHeader);
             this.Controls.Add(this.pnlSidebar);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
             this.Name = "frmPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Aybar ERP - Sistema de Gestión";
@@ -1715,7 +1832,9 @@ namespace pryAybar.ERP2
         private System.Windows.Forms.Label lblAgPassword;
         private System.Windows.Forms.TextBox txtAgPassword;
         private System.Windows.Forms.Label lblAgMail;
-        private System.Windows.Forms.TextBox txtAgMail;
+        private System.Windows.Forms.TextBox txtAgMailLocal;
+        private System.Windows.Forms.ComboBox cmbAgMailDominio;
+        private System.Windows.Forms.CheckBox chkAgMostrarPass;
         private System.Windows.Forms.Label lblAgPerfil;
         private System.Windows.Forms.ComboBox cmbAgPerfil;
         private System.Windows.Forms.Label lblAgProvincia;
@@ -1760,6 +1879,8 @@ namespace pryAybar.ERP2
         private System.Windows.Forms.Label lblEdActMailVal;
         private System.Windows.Forms.Label lblEdActPerfil;
         private System.Windows.Forms.Label lblEdActPerfilVal;
+        private System.Windows.Forms.Label lblEdActCelular;
+        private System.Windows.Forms.Label lblEdActCelularVal;
         private System.Windows.Forms.GroupBox grpEdNuevosDatos;
         private System.Windows.Forms.Label lblEdNombre;
         private System.Windows.Forms.TextBox txtEdNombre;
@@ -1770,7 +1891,8 @@ namespace pryAybar.ERP2
         private System.Windows.Forms.Label lblEdPassword;
         private System.Windows.Forms.TextBox txtEdPassword;
         private System.Windows.Forms.Label lblEdMail;
-        private System.Windows.Forms.TextBox txtEdMail;
+        private System.Windows.Forms.TextBox txtEdMailLocal;
+        private System.Windows.Forms.ComboBox cmbEdMailDominio;
         private System.Windows.Forms.Label lblEdPerfil;
         private System.Windows.Forms.ComboBox cmbEdPerfil;
         private System.Windows.Forms.GroupBox grpEdContacto;
@@ -1799,6 +1921,10 @@ namespace pryAybar.ERP2
         private System.Windows.Forms.Panel pnlAuditoriaHeader;
         private System.Windows.Forms.Label lblAudTitle;
         private System.Windows.Forms.Button btnAudRefrescar;
+        private System.Windows.Forms.TextBox txtAudBuscar;
+        private System.Windows.Forms.Label lblAudBuscar;
+        private System.Windows.Forms.DateTimePicker dtpAudFecha;
+        private System.Windows.Forms.CheckBox chkAudFiltrarFecha;
         private System.Windows.Forms.DataGridView dgvAuditoria;
         private System.Windows.Forms.Panel pnlConCard;
         private System.Windows.Forms.Panel pnlConStatusIndicator;
