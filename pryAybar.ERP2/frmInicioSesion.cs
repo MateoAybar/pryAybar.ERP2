@@ -49,7 +49,7 @@ namespace pryAybar.ERP2
             lblError.Text = "Verificando...";
             Application.DoEvents();
 
-            if (csMetodos.VerificarLogin(userStr, passStr, out idUsuario, out nombreCompleto, out perfil))
+            if (csMetodos.VerificarSesion(userStr, passStr, out idUsuario, out nombreCompleto, out perfil))
             {
                 lblError.Text = "";
                 frmPrincipal principal = new frmPrincipal(idUsuario, nombreCompleto, perfil);
@@ -112,6 +112,11 @@ namespace pryAybar.ERP2
                 btnEntrar_Click(sender, e);
                 e.Handled = true;
             }
+        }
+
+        private void pnlRight_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

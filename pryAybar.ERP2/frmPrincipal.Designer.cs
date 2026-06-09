@@ -17,17 +17,17 @@ namespace pryAybar.ERP2
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPrincipal));
             this.pnlSidebar = new System.Windows.Forms.Panel();
             this.lblSessionPerfil = new System.Windows.Forms.Label();
             this.lblSessionUser = new System.Windows.Forms.Label();
             this.pnlSessionDivider = new System.Windows.Forms.Panel();
-            this.lblEdActApe = new System.Windows.Forms.Label();
-            this.lblEdActPass = new System.Windows.Forms.Label();
-            this.lblEdActDNI = new System.Windows.Forms.Label();
-            this.lblEdActNom = new System.Windows.Forms.Label();
-            this.lblEdActCelular = new System.Windows.Forms.Label();
+            this.pnlNavSesion = new System.Windows.Forms.Panel();
+            this.lblNavSesion = new System.Windows.Forms.Label();
             this.btnNavSalir = new System.Windows.Forms.Button();
             this.btnNavCerrarSesion = new System.Windows.Forms.Button();
+            this.pnlNavGestion = new System.Windows.Forms.Panel();
+            this.lblNavGestion = new System.Windows.Forms.Label();
             this.btnNavEstadoConex = new System.Windows.Forms.Button();
             this.btnNavAuditoria = new System.Windows.Forms.Button();
             this.btnNavEditar = new System.Windows.Forms.Button();
@@ -80,6 +80,7 @@ namespace pryAybar.ERP2
             this.txtAgNombre = new System.Windows.Forms.TextBox();
             this.lblAgNombre = new System.Windows.Forms.Label();
             this.pnlEditar = new System.Windows.Forms.Panel();
+            this.btnEdAlta = new System.Windows.Forms.Button();
             this.btnEdBaja = new System.Windows.Forms.Button();
             this.btnEdGuardar = new System.Windows.Forms.Button();
             this.grpEdDomicilios = new System.Windows.Forms.GroupBox();
@@ -101,7 +102,7 @@ namespace pryAybar.ERP2
             this.lblEdRedUser = new System.Windows.Forms.Label();
             this.cmbEdRedSocial = new System.Windows.Forms.ComboBox();
             this.lblEdRedSocial = new System.Windows.Forms.Label();
-            this.txtEdCelular = new System.Windows.Forms.TextBox();
+            this.txtEdCelular = new System.Windows.Forms.MaskedTextBox();
             this.lblEdCelular = new System.Windows.Forms.Label();
             this.grpEdNuevosDatos = new System.Windows.Forms.GroupBox();
             this.cmbEdPerfil = new System.Windows.Forms.ComboBox();
@@ -124,13 +125,14 @@ namespace pryAybar.ERP2
             this.lblEdActDNIVal = new System.Windows.Forms.Label();
             this.lblEdActApeVal = new System.Windows.Forms.Label();
             this.lblEdActNomVal = new System.Windows.Forms.Label();
+            this.lblEdActCelularVal = new System.Windows.Forms.Label();
             this.lblEdActPerfil = new System.Windows.Forms.Label();
             this.lblEdActMail = new System.Windows.Forms.Label();
             this.lblEdActPass = new System.Windows.Forms.Label();
             this.lblEdActDNI = new System.Windows.Forms.Label();
+            this.lblEdActApe = new System.Windows.Forms.Label();
             this.lblEdActNom = new System.Windows.Forms.Label();
             this.lblEdActCelular = new System.Windows.Forms.Label();
-            this.lblEdActCelularVal = new System.Windows.Forms.Label();
             this.pnlEdSeleccionar = new System.Windows.Forms.Panel();
             this.cmbEdSeleccionar = new System.Windows.Forms.ComboBox();
             this.lblEdSeleccionar = new System.Windows.Forms.Label();
@@ -138,11 +140,11 @@ namespace pryAybar.ERP2
             this.dgvAuditoria = new System.Windows.Forms.DataGridView();
             this.pnlAuditoriaHeader = new System.Windows.Forms.Panel();
             this.btnAudRefrescar = new System.Windows.Forms.Button();
-            this.lblAudTitle = new System.Windows.Forms.Label();
-            this.txtAudBuscar = new System.Windows.Forms.TextBox();
-            this.lblAudBuscar = new System.Windows.Forms.Label();
-            this.dtpAudFecha = new System.Windows.Forms.DateTimePicker();
             this.chkAudFiltrarFecha = new System.Windows.Forms.CheckBox();
+            this.dtpAudFecha = new System.Windows.Forms.DateTimePicker();
+            this.lblAudBuscar = new System.Windows.Forms.Label();
+            this.txtAudBuscar = new System.Windows.Forms.TextBox();
+            this.lblAudTitle = new System.Windows.Forms.Label();
             this.pnlEstadoConex = new System.Windows.Forms.Panel();
             this.pnlConCard = new System.Windows.Forms.Panel();
             this.btnConReconectar = new System.Windows.Forms.Button();
@@ -150,6 +152,8 @@ namespace pryAybar.ERP2
             this.lblConStatus = new System.Windows.Forms.Label();
             this.pnlConStatusIndicator = new System.Windows.Forms.Panel();
             this.pnlSidebar.SuspendLayout();
+            this.pnlNavSesion.SuspendLayout();
+            this.pnlNavGestion.SuspendLayout();
             this.pnlHeader.SuspendLayout();
             this.pnlContent.SuspendLayout();
             this.pnlAgregar.SuspendLayout();
@@ -179,12 +183,8 @@ namespace pryAybar.ERP2
             this.pnlSidebar.Controls.Add(this.lblSessionPerfil);
             this.pnlSidebar.Controls.Add(this.lblSessionUser);
             this.pnlSidebar.Controls.Add(this.pnlSessionDivider);
-            this.pnlSidebar.Controls.Add(this.btnNavSalir);
-            this.pnlSidebar.Controls.Add(this.btnNavCerrarSesion);
-            this.pnlSidebar.Controls.Add(this.btnNavEstadoConex);
-            this.pnlSidebar.Controls.Add(this.btnNavAuditoria);
-            this.pnlSidebar.Controls.Add(this.btnNavEditar);
-            this.pnlSidebar.Controls.Add(this.btnNavAgregar);
+            this.pnlSidebar.Controls.Add(this.pnlNavSesion);
+            this.pnlSidebar.Controls.Add(this.pnlNavGestion);
             this.pnlSidebar.Controls.Add(this.lblSidebarLogo);
             this.pnlSidebar.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlSidebar.Location = new System.Drawing.Point(0, 0);
@@ -222,6 +222,27 @@ namespace pryAybar.ERP2
             this.pnlSessionDivider.Size = new System.Drawing.Size(190, 2);
             this.pnlSessionDivider.TabIndex = 7;
             // 
+            // pnlNavSesion
+            // 
+            this.pnlNavSesion.Controls.Add(this.lblNavSesion);
+            this.pnlNavSesion.Controls.Add(this.btnNavSalir);
+            this.pnlNavSesion.Controls.Add(this.btnNavCerrarSesion);
+            this.pnlNavSesion.Location = new System.Drawing.Point(0, 515);
+            this.pnlNavSesion.Name = "pnlNavSesion";
+            this.pnlNavSesion.Size = new System.Drawing.Size(220, 110);
+            this.pnlNavSesion.TabIndex = 11;
+            // 
+            // lblNavSesion
+            // 
+            this.lblNavSesion.AutoSize = true;
+            this.lblNavSesion.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNavSesion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(185)))), ((int)(((byte)(220)))));
+            this.lblNavSesion.Location = new System.Drawing.Point(15, 5);
+            this.lblNavSesion.Name = "lblNavSesion";
+            this.lblNavSesion.Size = new System.Drawing.Size(49, 15);
+            this.lblNavSesion.TabIndex = 0;
+            this.lblNavSesion.Text = "SESION";
+            // 
             // btnNavSalir
             // 
             this.btnNavSalir.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -231,7 +252,7 @@ namespace pryAybar.ERP2
             this.btnNavSalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNavSalir.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNavSalir.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
-            this.btnNavSalir.Location = new System.Drawing.Point(0, 580);
+            this.btnNavSalir.Location = new System.Drawing.Point(0, 70);
             this.btnNavSalir.Name = "btnNavSalir";
             this.btnNavSalir.Size = new System.Drawing.Size(220, 45);
             this.btnNavSalir.TabIndex = 6;
@@ -248,13 +269,36 @@ namespace pryAybar.ERP2
             this.btnNavCerrarSesion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNavCerrarSesion.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNavCerrarSesion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(235)))), ((int)(((byte)(255)))));
-            this.btnNavCerrarSesion.Location = new System.Drawing.Point(0, 530);
+            this.btnNavCerrarSesion.Location = new System.Drawing.Point(0, 25);
             this.btnNavCerrarSesion.Name = "btnNavCerrarSesion";
             this.btnNavCerrarSesion.Size = new System.Drawing.Size(220, 45);
             this.btnNavCerrarSesion.TabIndex = 5;
             this.btnNavCerrarSesion.Text = "CERRAR SESIÓN";
             this.btnNavCerrarSesion.UseVisualStyleBackColor = true;
             this.btnNavCerrarSesion.Click += new System.EventHandler(this.btnNavCerrarSesion_Click);
+            // 
+            // pnlNavGestion
+            // 
+            this.pnlNavGestion.Controls.Add(this.lblNavGestion);
+            this.pnlNavGestion.Controls.Add(this.btnNavEstadoConex);
+            this.pnlNavGestion.Controls.Add(this.btnNavAuditoria);
+            this.pnlNavGestion.Controls.Add(this.btnNavEditar);
+            this.pnlNavGestion.Controls.Add(this.btnNavAgregar);
+            this.pnlNavGestion.Location = new System.Drawing.Point(0, 155);
+            this.pnlNavGestion.Name = "pnlNavGestion";
+            this.pnlNavGestion.Size = new System.Drawing.Size(220, 215);
+            this.pnlNavGestion.TabIndex = 10;
+            // 
+            // lblNavGestion
+            // 
+            this.lblNavGestion.AutoSize = true;
+            this.lblNavGestion.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNavGestion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(185)))), ((int)(((byte)(220)))));
+            this.lblNavGestion.Location = new System.Drawing.Point(15, 5);
+            this.lblNavGestion.Name = "lblNavGestion";
+            this.lblNavGestion.Size = new System.Drawing.Size(58, 15);
+            this.lblNavGestion.TabIndex = 0;
+            this.lblNavGestion.Text = "GESTION";
             // 
             // btnNavEstadoConex
             // 
@@ -265,7 +309,7 @@ namespace pryAybar.ERP2
             this.btnNavEstadoConex.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNavEstadoConex.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNavEstadoConex.ForeColor = System.Drawing.Color.White;
-            this.btnNavEstadoConex.Location = new System.Drawing.Point(0, 310);
+            this.btnNavEstadoConex.Location = new System.Drawing.Point(0, 160);
             this.btnNavEstadoConex.Name = "btnNavEstadoConex";
             this.btnNavEstadoConex.Size = new System.Drawing.Size(220, 45);
             this.btnNavEstadoConex.TabIndex = 4;
@@ -282,7 +326,7 @@ namespace pryAybar.ERP2
             this.btnNavAuditoria.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNavAuditoria.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNavAuditoria.ForeColor = System.Drawing.Color.White;
-            this.btnNavAuditoria.Location = new System.Drawing.Point(0, 260);
+            this.btnNavAuditoria.Location = new System.Drawing.Point(0, 115);
             this.btnNavAuditoria.Name = "btnNavAuditoria";
             this.btnNavAuditoria.Size = new System.Drawing.Size(220, 45);
             this.btnNavAuditoria.TabIndex = 3;
@@ -299,7 +343,7 @@ namespace pryAybar.ERP2
             this.btnNavEditar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNavEditar.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNavEditar.ForeColor = System.Drawing.Color.White;
-            this.btnNavEditar.Location = new System.Drawing.Point(0, 210);
+            this.btnNavEditar.Location = new System.Drawing.Point(0, 70);
             this.btnNavEditar.Name = "btnNavEditar";
             this.btnNavEditar.Size = new System.Drawing.Size(220, 45);
             this.btnNavEditar.TabIndex = 2;
@@ -316,7 +360,7 @@ namespace pryAybar.ERP2
             this.btnNavAgregar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNavAgregar.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNavAgregar.ForeColor = System.Drawing.Color.White;
-            this.btnNavAgregar.Location = new System.Drawing.Point(0, 160);
+            this.btnNavAgregar.Location = new System.Drawing.Point(0, 25);
             this.btnNavAgregar.Name = "btnNavAgregar";
             this.btnNavAgregar.Size = new System.Drawing.Size(220, 45);
             this.btnNavAgregar.TabIndex = 7;
@@ -582,10 +626,11 @@ namespace pryAybar.ERP2
             // 
             // txtAgCelular
             // 
+            this.txtAgCelular.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtAgCelular.Location = new System.Drawing.Point(15, 45);
-            this.txtAgCelular.Mask = "000-000-0000";
+            this.txtAgCelular.Mask = "+54 000 000-0000";
             this.txtAgCelular.Name = "txtAgCelular";
-            this.txtAgCelular.Size = new System.Drawing.Size(360, 24);
+            this.txtAgCelular.Size = new System.Drawing.Size(360, 23);
             this.txtAgCelular.TabIndex = 10;
             // 
             // btnAgRemoveRed
@@ -721,7 +766,7 @@ namespace pryAybar.ERP2
             this.cmbAgLocalidad.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbAgLocalidad.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbAgLocalidad.FormattingEnabled = true;
-            this.cmbAgLocalidad.Location = new System.Drawing.Point(20, 448);
+            this.cmbAgLocalidad.Location = new System.Drawing.Point(20, 460);
             this.cmbAgLocalidad.Name = "cmbAgLocalidad";
             this.cmbAgLocalidad.Size = new System.Drawing.Size(300, 23);
             this.cmbAgLocalidad.TabIndex = 15;
@@ -731,7 +776,7 @@ namespace pryAybar.ERP2
             this.lblAgLocalidad.AutoSize = true;
             this.lblAgLocalidad.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAgLocalidad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(120)))), ((int)(((byte)(135)))));
-            this.lblAgLocalidad.Location = new System.Drawing.Point(17, 431);
+            this.lblAgLocalidad.Location = new System.Drawing.Point(17, 443);
             this.lblAgLocalidad.Name = "lblAgLocalidad";
             this.lblAgLocalidad.Size = new System.Drawing.Size(118, 15);
             this.lblAgLocalidad.TabIndex = 14;
@@ -742,7 +787,7 @@ namespace pryAybar.ERP2
             this.cmbAgProvincia.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbAgProvincia.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbAgProvincia.FormattingEnabled = true;
-            this.cmbAgProvincia.Location = new System.Drawing.Point(20, 395);
+            this.cmbAgProvincia.Location = new System.Drawing.Point(20, 407);
             this.cmbAgProvincia.Name = "cmbAgProvincia";
             this.cmbAgProvincia.Size = new System.Drawing.Size(300, 23);
             this.cmbAgProvincia.TabIndex = 13;
@@ -752,7 +797,7 @@ namespace pryAybar.ERP2
             this.lblAgProvincia.AutoSize = true;
             this.lblAgProvincia.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAgProvincia.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(120)))), ((int)(((byte)(135)))));
-            this.lblAgProvincia.Location = new System.Drawing.Point(17, 378);
+            this.lblAgProvincia.Location = new System.Drawing.Point(17, 390);
             this.lblAgProvincia.Name = "lblAgProvincia";
             this.lblAgProvincia.Size = new System.Drawing.Size(127, 15);
             this.lblAgProvincia.TabIndex = 12;
@@ -763,7 +808,7 @@ namespace pryAybar.ERP2
             this.cmbAgPerfil.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbAgPerfil.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbAgPerfil.FormattingEnabled = true;
-            this.cmbAgPerfil.Location = new System.Drawing.Point(20, 340);
+            this.cmbAgPerfil.Location = new System.Drawing.Point(20, 352);
             this.cmbAgPerfil.Name = "cmbAgPerfil";
             this.cmbAgPerfil.Size = new System.Drawing.Size(300, 23);
             this.cmbAgPerfil.TabIndex = 11;
@@ -773,7 +818,7 @@ namespace pryAybar.ERP2
             this.lblAgPerfil.AutoSize = true;
             this.lblAgPerfil.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAgPerfil.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(120)))), ((int)(((byte)(135)))));
-            this.lblAgPerfil.Location = new System.Drawing.Point(17, 323);
+            this.lblAgPerfil.Location = new System.Drawing.Point(17, 335);
             this.lblAgPerfil.Name = "lblAgPerfil";
             this.lblAgPerfil.Size = new System.Drawing.Size(40, 15);
             this.lblAgPerfil.TabIndex = 10;
@@ -782,7 +827,7 @@ namespace pryAybar.ERP2
             // txtAgMailLocal
             // 
             this.txtAgMailLocal.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAgMailLocal.Location = new System.Drawing.Point(20, 287);
+            this.txtAgMailLocal.Location = new System.Drawing.Point(20, 299);
             this.txtAgMailLocal.Name = "txtAgMailLocal";
             this.txtAgMailLocal.Size = new System.Drawing.Size(165, 23);
             this.txtAgMailLocal.TabIndex = 9;
@@ -792,7 +837,7 @@ namespace pryAybar.ERP2
             this.cmbAgMailDominio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbAgMailDominio.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbAgMailDominio.FormattingEnabled = true;
-            this.cmbAgMailDominio.Location = new System.Drawing.Point(190, 287);
+            this.cmbAgMailDominio.Location = new System.Drawing.Point(190, 299);
             this.cmbAgMailDominio.Name = "cmbAgMailDominio";
             this.cmbAgMailDominio.Size = new System.Drawing.Size(130, 23);
             this.cmbAgMailDominio.TabIndex = 17;
@@ -802,9 +847,9 @@ namespace pryAybar.ERP2
             this.chkAgMostrarPass.AutoSize = true;
             this.chkAgMostrarPass.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkAgMostrarPass.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(120)))), ((int)(((byte)(135)))));
-            this.chkAgMostrarPass.Location = new System.Drawing.Point(20, 260);
+            this.chkAgMostrarPass.Location = new System.Drawing.Point(22, 248);
             this.chkAgMostrarPass.Name = "chkAgMostrarPass";
-            this.chkAgMostrarPass.Size = new System.Drawing.Size(120, 19);
+            this.chkAgMostrarPass.Size = new System.Drawing.Size(128, 19);
             this.chkAgMostrarPass.TabIndex = 18;
             this.chkAgMostrarPass.Text = "Mostrar contraseña";
             this.chkAgMostrarPass.CheckedChanged += new System.EventHandler(this.chkAgMostrarPass_CheckedChanged);
@@ -814,7 +859,7 @@ namespace pryAybar.ERP2
             this.lblAgMail.AutoSize = true;
             this.lblAgMail.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAgMail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(120)))), ((int)(((byte)(135)))));
-            this.lblAgMail.Location = new System.Drawing.Point(17, 270);
+            this.lblAgMail.Location = new System.Drawing.Point(17, 282);
             this.lblAgMail.Name = "lblAgMail";
             this.lblAgMail.Size = new System.Drawing.Size(45, 15);
             this.lblAgMail.TabIndex = 8;
@@ -823,7 +868,7 @@ namespace pryAybar.ERP2
             // txtAgPassword
             // 
             this.txtAgPassword.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAgPassword.Location = new System.Drawing.Point(20, 234);
+            this.txtAgPassword.Location = new System.Drawing.Point(20, 219);
             this.txtAgPassword.Name = "txtAgPassword";
             this.txtAgPassword.Size = new System.Drawing.Size(300, 23);
             this.txtAgPassword.TabIndex = 7;
@@ -833,7 +878,7 @@ namespace pryAybar.ERP2
             this.lblAgPassword.AutoSize = true;
             this.lblAgPassword.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAgPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(120)))), ((int)(((byte)(135)))));
-            this.lblAgPassword.Location = new System.Drawing.Point(17, 217);
+            this.lblAgPassword.Location = new System.Drawing.Point(17, 202);
             this.lblAgPassword.Name = "lblAgPassword";
             this.lblAgPassword.Size = new System.Drawing.Size(72, 15);
             this.lblAgPassword.TabIndex = 6;
@@ -842,7 +887,7 @@ namespace pryAybar.ERP2
             // txtAgDNI
             // 
             this.txtAgDNI.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAgDNI.Location = new System.Drawing.Point(20, 180);
+            this.txtAgDNI.Location = new System.Drawing.Point(20, 165);
             this.txtAgDNI.Name = "txtAgDNI";
             this.txtAgDNI.Size = new System.Drawing.Size(300, 23);
             this.txtAgDNI.TabIndex = 5;
@@ -852,7 +897,7 @@ namespace pryAybar.ERP2
             this.lblAgDNI.AutoSize = true;
             this.lblAgDNI.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAgDNI.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(120)))), ((int)(((byte)(135)))));
-            this.lblAgDNI.Location = new System.Drawing.Point(17, 163);
+            this.lblAgDNI.Location = new System.Drawing.Point(17, 148);
             this.lblAgDNI.Name = "lblAgDNI";
             this.lblAgDNI.Size = new System.Drawing.Size(32, 15);
             this.lblAgDNI.TabIndex = 4;
@@ -861,7 +906,7 @@ namespace pryAybar.ERP2
             // txtAgApellido
             // 
             this.txtAgApellido.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAgApellido.Location = new System.Drawing.Point(20, 127);
+            this.txtAgApellido.Location = new System.Drawing.Point(20, 112);
             this.txtAgApellido.Name = "txtAgApellido";
             this.txtAgApellido.Size = new System.Drawing.Size(300, 23);
             this.txtAgApellido.TabIndex = 3;
@@ -871,7 +916,7 @@ namespace pryAybar.ERP2
             this.lblAgApellido.AutoSize = true;
             this.lblAgApellido.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAgApellido.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(120)))), ((int)(((byte)(135)))));
-            this.lblAgApellido.Location = new System.Drawing.Point(17, 110);
+            this.lblAgApellido.Location = new System.Drawing.Point(17, 95);
             this.lblAgApellido.Name = "lblAgApellido";
             this.lblAgApellido.Size = new System.Drawing.Size(55, 15);
             this.lblAgApellido.TabIndex = 2;
@@ -880,7 +925,7 @@ namespace pryAybar.ERP2
             // txtAgNombre
             // 
             this.txtAgNombre.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAgNombre.Location = new System.Drawing.Point(20, 74);
+            this.txtAgNombre.Location = new System.Drawing.Point(20, 59);
             this.txtAgNombre.Name = "txtAgNombre";
             this.txtAgNombre.Size = new System.Drawing.Size(300, 23);
             this.txtAgNombre.TabIndex = 1;
@@ -890,7 +935,7 @@ namespace pryAybar.ERP2
             this.lblAgNombre.AutoSize = true;
             this.lblAgNombre.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAgNombre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(120)))), ((int)(((byte)(135)))));
-            this.lblAgNombre.Location = new System.Drawing.Point(17, 57);
+            this.lblAgNombre.Location = new System.Drawing.Point(17, 42);
             this.lblAgNombre.Name = "lblAgNombre";
             this.lblAgNombre.Size = new System.Drawing.Size(56, 15);
             this.lblAgNombre.TabIndex = 0;
@@ -898,6 +943,7 @@ namespace pryAybar.ERP2
             // 
             // pnlEditar
             // 
+            this.pnlEditar.Controls.Add(this.btnEdAlta);
             this.pnlEditar.Controls.Add(this.btnEdBaja);
             this.pnlEditar.Controls.Add(this.btnEdGuardar);
             this.pnlEditar.Controls.Add(this.grpEdDomicilios);
@@ -910,6 +956,23 @@ namespace pryAybar.ERP2
             this.pnlEditar.Name = "pnlEditar";
             this.pnlEditar.Size = new System.Drawing.Size(780, 590);
             this.pnlEditar.TabIndex = 1;
+            // 
+            // btnEdAlta
+            // 
+            this.btnEdAlta.BackColor = System.Drawing.Color.SeaGreen;
+            this.btnEdAlta.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnEdAlta.Enabled = false;
+            this.btnEdAlta.FlatAppearance.BorderSize = 0;
+            this.btnEdAlta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEdAlta.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEdAlta.ForeColor = System.Drawing.Color.White;
+            this.btnEdAlta.Location = new System.Drawing.Point(180, 530);
+            this.btnEdAlta.Name = "btnEdAlta";
+            this.btnEdAlta.Size = new System.Drawing.Size(150, 40);
+            this.btnEdAlta.TabIndex = 7;
+            this.btnEdAlta.Text = "Dar de Alta";
+            this.btnEdAlta.UseVisualStyleBackColor = false;
+            this.btnEdAlta.Click += new System.EventHandler(this.btnEdAlta_Click);
             // 
             // btnEdBaja
             // 
@@ -1199,6 +1262,7 @@ namespace pryAybar.ERP2
             // 
             this.txtEdCelular.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtEdCelular.Location = new System.Drawing.Point(15, 32);
+            this.txtEdCelular.Mask = "+54 000 000-0000";
             this.txtEdCelular.Name = "txtEdCelular";
             this.txtEdCelular.Size = new System.Drawing.Size(360, 23);
             this.txtEdCelular.TabIndex = 1;
@@ -1457,6 +1521,17 @@ namespace pryAybar.ERP2
             this.lblEdActNomVal.TabIndex = 6;
             this.lblEdActNomVal.Text = "-";
             // 
+            // lblEdActCelularVal
+            // 
+            this.lblEdActCelularVal.AutoSize = true;
+            this.lblEdActCelularVal.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEdActCelularVal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
+            this.lblEdActCelularVal.Location = new System.Drawing.Point(100, 205);
+            this.lblEdActCelularVal.Name = "lblEdActCelularVal";
+            this.lblEdActCelularVal.Size = new System.Drawing.Size(12, 15);
+            this.lblEdActCelularVal.TabIndex = 13;
+            this.lblEdActCelularVal.Text = "-";
+            // 
             // lblEdActPerfil
             // 
             this.lblEdActPerfil.AutoSize = true;
@@ -1509,13 +1584,10 @@ namespace pryAybar.ERP2
             // 
             // lblEdActNom
             // 
-            this.lblEdActNom.AutoSize = true;
-            this.lblEdActNom.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEdActNom.Location = new System.Drawing.Point(15, 25);
+            this.lblEdActNom.Location = new System.Drawing.Point(0, 0);
             this.lblEdActNom.Name = "lblEdActNom";
-            this.lblEdActNom.Size = new System.Drawing.Size(56, 15);
-            this.lblEdActNom.TabIndex = 0;
-            this.lblEdActNom.Text = "Nombre:";
+            this.lblEdActNom.Size = new System.Drawing.Size(100, 23);
+            this.lblEdActNom.TabIndex = 14;
             // 
             // lblEdActCelular
             // 
@@ -1523,20 +1595,9 @@ namespace pryAybar.ERP2
             this.lblEdActCelular.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEdActCelular.Location = new System.Drawing.Point(15, 205);
             this.lblEdActCelular.Name = "lblEdActCelular";
-            this.lblEdActCelular.Size = new System.Drawing.Size(60, 15);
+            this.lblEdActCelular.Size = new System.Drawing.Size(48, 15);
             this.lblEdActCelular.TabIndex = 12;
             this.lblEdActCelular.Text = "Celular:";
-            // 
-            // lblEdActCelularVal
-            // 
-            this.lblEdActCelularVal.AutoSize = true;
-            this.lblEdActCelularVal.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEdActCelularVal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.lblEdActCelularVal.Location = new System.Drawing.Point(100, 205);
-            this.lblEdActCelularVal.Name = "lblEdActCelularVal";
-            this.lblEdActCelularVal.Size = new System.Drawing.Size(12, 15);
-            this.lblEdActCelularVal.TabIndex = 13;
-            this.lblEdActCelularVal.Text = "-";
             // 
             // pnlEdSeleccionar
             // 
@@ -1550,6 +1611,8 @@ namespace pryAybar.ERP2
             // 
             // cmbEdSeleccionar
             // 
+            this.cmbEdSeleccionar.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cmbEdSeleccionar.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cmbEdSeleccionar.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbEdSeleccionar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbEdSeleccionar.FormattingEnabled = true;
@@ -1588,12 +1651,12 @@ namespace pryAybar.ERP2
             this.dgvAuditoria.BackgroundColor = System.Drawing.Color.White;
             this.dgvAuditoria.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvAuditoria.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvAuditoria.Location = new System.Drawing.Point(0, 50);
+            this.dgvAuditoria.Location = new System.Drawing.Point(0, 80);
             this.dgvAuditoria.Name = "dgvAuditoria";
             this.dgvAuditoria.ReadOnly = true;
             this.dgvAuditoria.RowHeadersVisible = false;
             this.dgvAuditoria.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvAuditoria.Size = new System.Drawing.Size(780, 540);
+            this.dgvAuditoria.Size = new System.Drawing.Size(780, 510);
             this.dgvAuditoria.TabIndex = 1;
             // 
             // pnlAuditoriaHeader
@@ -1627,36 +1690,6 @@ namespace pryAybar.ERP2
             this.btnAudRefrescar.UseVisualStyleBackColor = false;
             this.btnAudRefrescar.Click += new System.EventHandler(this.btnAudRefrescar_Click);
             // 
-            // lblAudTitle
-            // 
-            this.lblAudTitle.AutoSize = true;
-            this.lblAudTitle.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAudTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(54)))), ((int)(((byte)(93)))));
-            this.lblAudTitle.Location = new System.Drawing.Point(20, 15);
-            this.lblAudTitle.Name = "lblAudTitle";
-            this.lblAudTitle.Size = new System.Drawing.Size(231, 20);
-            this.lblAudTitle.TabIndex = 0;
-            this.lblAudTitle.Text = "Auditoría de Accesos al Sistema";
-            // 
-            // txtAudBuscar
-            // 
-            this.txtAudBuscar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAudBuscar.Location = new System.Drawing.Point(270, 45);
-            this.txtAudBuscar.Name = "txtAudBuscar";
-            this.txtAudBuscar.Size = new System.Drawing.Size(200, 23);
-            this.txtAudBuscar.TabIndex = 2;
-            this.txtAudBuscar.TextChanged += new System.EventHandler(this.txtAudBuscar_TextChanged);
-            // 
-            // lblAudBuscar
-            // 
-            this.lblAudBuscar.AutoSize = true;
-            this.lblAudBuscar.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAudBuscar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(120)))), ((int)(((byte)(135)))));
-            this.lblAudBuscar.Location = new System.Drawing.Point(270, 28);
-            this.lblAudBuscar.Name = "lblAudBuscar";
-            this.lblAudBuscar.TabIndex = 5;
-            this.lblAudBuscar.Text = "Buscar:";
-            // 
             // chkAudFiltrarFecha
             // 
             this.chkAudFiltrarFecha.AutoSize = true;
@@ -1664,7 +1697,7 @@ namespace pryAybar.ERP2
             this.chkAudFiltrarFecha.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(120)))), ((int)(((byte)(135)))));
             this.chkAudFiltrarFecha.Location = new System.Drawing.Point(480, 45);
             this.chkAudFiltrarFecha.Name = "chkAudFiltrarFecha";
-            this.chkAudFiltrarFecha.Size = new System.Drawing.Size(100, 19);
+            this.chkAudFiltrarFecha.Size = new System.Drawing.Size(109, 19);
             this.chkAudFiltrarFecha.TabIndex = 3;
             this.chkAudFiltrarFecha.Text = "Filtrar por fecha";
             this.chkAudFiltrarFecha.CheckedChanged += new System.EventHandler(this.chkAudFiltrarFecha_CheckedChanged);
@@ -1679,6 +1712,37 @@ namespace pryAybar.ERP2
             this.dtpAudFecha.Size = new System.Drawing.Size(150, 23);
             this.dtpAudFecha.TabIndex = 4;
             this.dtpAudFecha.ValueChanged += new System.EventHandler(this.dtpAudFecha_ValueChanged);
+            // 
+            // lblAudBuscar
+            // 
+            this.lblAudBuscar.AutoSize = true;
+            this.lblAudBuscar.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAudBuscar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(120)))), ((int)(((byte)(135)))));
+            this.lblAudBuscar.Location = new System.Drawing.Point(270, 28);
+            this.lblAudBuscar.Name = "lblAudBuscar";
+            this.lblAudBuscar.Size = new System.Drawing.Size(47, 15);
+            this.lblAudBuscar.TabIndex = 5;
+            this.lblAudBuscar.Text = "Buscar:";
+            // 
+            // txtAudBuscar
+            // 
+            this.txtAudBuscar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAudBuscar.Location = new System.Drawing.Point(270, 45);
+            this.txtAudBuscar.Name = "txtAudBuscar";
+            this.txtAudBuscar.Size = new System.Drawing.Size(200, 23);
+            this.txtAudBuscar.TabIndex = 2;
+            this.txtAudBuscar.TextChanged += new System.EventHandler(this.txtAudBuscar_TextChanged);
+            // 
+            // lblAudTitle
+            // 
+            this.lblAudTitle.AutoSize = true;
+            this.lblAudTitle.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAudTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(54)))), ((int)(((byte)(93)))));
+            this.lblAudTitle.Location = new System.Drawing.Point(20, 15);
+            this.lblAudTitle.Name = "lblAudTitle";
+            this.lblAudTitle.Size = new System.Drawing.Size(231, 20);
+            this.lblAudTitle.TabIndex = 0;
+            this.lblAudTitle.Text = "Auditoría de Accesos al Sistema";
             // 
             // pnlEstadoConex
             // 
@@ -1758,7 +1822,8 @@ namespace pryAybar.ERP2
             this.Controls.Add(this.pnlContent);
             this.Controls.Add(this.pnlHeader);
             this.Controls.Add(this.pnlSidebar);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Aybar ERP - Sistema de Gestión";
@@ -1767,6 +1832,10 @@ namespace pryAybar.ERP2
             this.Load += new System.EventHandler(this.frmPrincipal_Load);
             this.pnlSidebar.ResumeLayout(false);
             this.pnlSidebar.PerformLayout();
+            this.pnlNavSesion.ResumeLayout(false);
+            this.pnlNavSesion.PerformLayout();
+            this.pnlNavGestion.ResumeLayout(false);
+            this.pnlNavGestion.PerformLayout();
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
             this.pnlContent.ResumeLayout(false);
@@ -1818,6 +1887,10 @@ namespace pryAybar.ERP2
         private System.Windows.Forms.Panel pnlHeader;
         private System.Windows.Forms.Label lblHeaderTitle;
         private System.Windows.Forms.Panel pnlContent;
+        private System.Windows.Forms.Panel pnlNavGestion;
+        private System.Windows.Forms.Label lblNavGestion;
+        private System.Windows.Forms.Panel pnlNavSesion;
+        private System.Windows.Forms.Label lblNavSesion;
         private System.Windows.Forms.Panel pnlAgregar;
         private System.Windows.Forms.Panel pnlEditar;
         private System.Windows.Forms.Panel pnlAuditoria;
@@ -1897,7 +1970,7 @@ namespace pryAybar.ERP2
         private System.Windows.Forms.ComboBox cmbEdPerfil;
         private System.Windows.Forms.GroupBox grpEdContacto;
         private System.Windows.Forms.Label lblEdCelular;
-        private System.Windows.Forms.TextBox txtEdCelular;
+        private System.Windows.Forms.MaskedTextBox txtEdCelular;
         private System.Windows.Forms.Label lblEdRedSocial;
         private System.Windows.Forms.ComboBox cmbEdRedSocial;
         private System.Windows.Forms.Label lblEdRedUser;
@@ -1918,6 +1991,7 @@ namespace pryAybar.ERP2
         private System.Windows.Forms.Button btnEdMaps;
         private System.Windows.Forms.Button btnEdGuardar;
         private System.Windows.Forms.Button btnEdBaja;
+        private System.Windows.Forms.Button btnEdAlta;
         private System.Windows.Forms.Panel pnlAuditoriaHeader;
         private System.Windows.Forms.Label lblAudTitle;
         private System.Windows.Forms.Button btnAudRefrescar;

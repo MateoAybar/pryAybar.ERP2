@@ -41,9 +41,8 @@ namespace pryAybar.ERP2
             currentUserId    = idUsuario;
             currentUserNombre = nombreCompleto;
             currentUserPerfil = perfil;
-            this.MinimizeBox = true;  // Corrección: ventana se puede minimizar
+            this.MinimizeBox = true;
             this.MaximizeBox = true;
-            this.KeyPreview  = true;  // Permite atajos de teclado globales
         }
 
         // ─── FORM LOAD ───────────────────────────────────────────────────────────
@@ -121,47 +120,8 @@ namespace pryAybar.ERP2
             AplicarEstiloGrilla(dgvEdRedes);
             AplicarEstiloGrilla(dgvEdDomicilios);
 
-            // 7. Check database connection status initially
+            // 8. Check database connection status initially
             TestDatabaseConnection();
-
-            // 8. Enter key on fields triggers save
-            ConectarTeclaEnterEnCampos();
-        }
-
-        // ─── KEYBOARD SHORTCUTS ──────────────────────────────────────────────────
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-            base.OnKeyDown(e);
-            if (e.Control && e.KeyCode == Keys.S)
-            {
-                // Ctrl+S = Guardar según panel activo
-                if (pnlAgregar.Visible) btnAgGuardar_Click(null, null);
-                else if (pnlEditar.Visible) btnEdGuardar_Click(null, null);
-                e.SuppressKeyPress = true;
-            }
-            else if (e.KeyCode == Keys.F5)
-            {
-                if (pnlAuditoria.Visible) CargarAuditoriaGrid();
-                else if (pnlEstadoConex.Visible) TestDatabaseConnection();
-                e.SuppressKeyPress = true;
-            }
-            else if (e.KeyCode == Keys.Escape)
-            {
-                if (pnlAgregar.Visible) btnAgLimpiar_Click(null, null);
-                e.SuppressKeyPress = true;
-            }
-        }
-
-        private void ConectarTeclaEnterEnCampos()
-        {
-            // Permitir Enter en los campos principales para avanzar / guardar
-            Control[] camposAg = { txtAgNombre, txtAgApellido, txtAgDNI, txtAgPassword, txtAgMailLocal };
-            foreach (var c in camposAg)
-                c.KeyDown += (s, e) => { if (e.KeyCode == Keys.Enter) { SelectNextControl((Control)s, true, true, true, true); e.SuppressKeyPress = true; } };
-
-            Control[] camposEd = { txtEdNombre, txtEdApellido, txtEdDNI, txtEdPassword, txtEdMailLocal };
-            foreach (var c in camposEd)
-                c.KeyDown += (s, e) => { if (e.KeyCode == Keys.Enter) { SelectNextControl((Control)s, true, true, true, true); e.SuppressKeyPress = true; } };
         }
 
         // ─── GRID STYLING ────────────────────────────────────────────────────────
@@ -242,13 +202,14 @@ namespace pryAybar.ERP2
         private void CargarComboUsuariosEdicion()
         {
             // Corrección: combo con búsqueda por nombre (DropDown en lugar de DropDownList)
-            cmbEdSeleccionar.DropDownStyle = ComboBoxStyle.DropDown;
-            DataTable dtUsers = csMetodos.ObtenerUsuariosActivos();
+            cmbEdSeleccionar.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbEdSeleccionar.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            cmbEdSeleccionar.AutoCompleteSource = AutoCompleteSource.ListItems;
+            DataTable dtUsers = csMetodos.ObtenerUsuariosParaEdicion();
             cmbEdSeleccionar.DisplayMember = "Display";
             cmbEdSeleccionar.ValueMember   = "Id_Usuario";
             cmbEdSeleccionar.DataSource    = dtUsers;
             cmbEdSeleccionar.SelectedIndex = -1;
-            cmbEdSeleccionar.Text          = "";
             LimpiarCamposEdicion();
         }
 
@@ -487,8 +448,8 @@ namespace pryAybar.ERP2
             valido &= ValidarCampo(txtAgPassword, "Contraseña", 1, soloNumeros: true, maxLen: 8);
 
             // Corrección: Teléfono con +54
-            string celular = "+54 " + txtAgCelular.Text.Trim();
-            if (string.IsNullOrWhiteSpace(txtAgCelular.Text.Trim()))
+            string celular = csMetodos.NormalizarCelularArgentina(txtAgCelular.Text);
+            if (string.IsNullOrEmpty(celular))
             {
                 celular = "";
             }
@@ -570,13 +531,13 @@ namespace pryAybar.ERP2
             chkAgMostrarPass.Checked = false;
         }
 
-        // Corrección: Mostrar contraseña en Agregar
+        
         private void chkAgMostrarPass_CheckedChanged(object sender, EventArgs e)
         {
             txtAgPassword.UseSystemPasswordChar = !chkAgMostrarPass.Checked;
         }
 
-        // ─── ED: SELECCIÓN ───────────────────────────────────────────────────────
+        
         private void cmbEdSeleccionar_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbEdSeleccionar.SelectedIndex == -1 || cmbEdSeleccionar.SelectedValue == null)
@@ -598,13 +559,16 @@ namespace pryAybar.ERP2
                 lblEdActDNIVal.Text  = userRow["DNI"].ToString();
                 lblEdActPassVal.Text = userRow["Contraseña"].ToString();
                 lblEdActMailVal.Text = userRow["Mail"].ToString();
+                string activo = userRow["Activo"].ToString().Trim().ToLower();
+                btnEdBaja.Enabled = activo == "si";
+                btnEdAlta.Enabled = activo != "si";
 
                 txtEdNombre.Text   = userRow["Nombre"].ToString();
                 txtEdApellido.Text = userRow["Apellido"].ToString();
                 txtEdDNI.Text      = userRow["DNI"].ToString();
                 txtEdPassword.Text = userRow["Contraseña"].ToString();
 
-                // Split mail into local + dominio
+                
                 string fullMail = userRow["Mail"].ToString();
                 int atIdx = fullMail.IndexOf('@');
                 if (atIdx >= 0)
@@ -630,9 +594,10 @@ namespace pryAybar.ERP2
                     lblEdActPerfilVal.Text = pRows.Length > 0 ? pRows[0]["Nombre"].ToString() : "-";
                 }
 
-                // Contactos
+                
                 dtEdRedes.Rows.Clear();
                 txtEdCelular.Clear();
+                lblEdActCelularVal.Text = "-";
 
                 DataTable contactsTable = csMetodos.ObtenerContactosUsuario(idUsuario);
                 foreach (DataRow r in contactsTable.Rows)
@@ -640,8 +605,8 @@ namespace pryAybar.ERP2
                     string cel = r["Numero Celular"].ToString();
                     if (!string.IsNullOrEmpty(cel) && string.IsNullOrEmpty(txtEdCelular.Text))
                     {
-                        // Corrección: mostrar número de teléfono en datos actuales
-                        txtEdCelular.Text = cel;
+                        
+                        txtEdCelular.Text = csMetodos.ObtenerNumeroLocalCelularArgentina(cel);
                         lblEdActCelularVal.Text = cel;
                     }
 
@@ -653,7 +618,7 @@ namespace pryAybar.ERP2
                     }
                 }
 
-                // Domicilios
+                
                 dtEdDomicilios.Rows.Clear();
                 DataTable addressesTable = csMetodos.ObtenerDomiciliosUsuario(idUsuario);
                 foreach (DataRow r in addressesTable.Rows)
@@ -671,6 +636,8 @@ namespace pryAybar.ERP2
             lblEdActDNIVal.Text     = "-"; lblEdActPassVal.Text = "-";
             lblEdActMailVal.Text    = "-"; lblEdActPerfilVal.Text = "-";
             lblEdActCelularVal.Text = "-";
+            btnEdBaja.Enabled = false;
+            btnEdAlta.Enabled = false;
 
             txtEdNombre.Clear(); txtEdApellido.Clear(); txtEdDNI.Clear();
             txtEdPassword.Clear(); txtEdMailLocal.Clear(); txtEdCelular.Clear();
@@ -685,7 +652,7 @@ namespace pryAybar.ERP2
             dtEdDomicilios.Rows.Clear();
         }
 
-        // ─── ED: REDES ───────────────────────────────────────────────────────────
+        
         private void btnEdAddRed_Click(object sender, EventArgs e)
         {
             if (cmbEdSeleccionar.SelectedIndex == -1) return;
@@ -706,7 +673,7 @@ namespace pryAybar.ERP2
                 dgvEdRedes.Rows.RemoveAt(dgvEdRedes.CurrentRow.Index);
         }
 
-        // ─── ED: DOMICILIOS ──────────────────────────────────────────────────────
+        
         private void btnEdAddDom_Click(object sender, EventArgs e)
         {
             if (cmbEdSeleccionar.SelectedIndex == -1) return;
@@ -732,7 +699,7 @@ namespace pryAybar.ERP2
 
         private void btnEdMaps_Click(object sender, EventArgs e) { AbrirMapsDesdeGrid(dgvEdDomicilios); }
 
-        // ─── ED: GUARDAR ─────────────────────────────────────────────────────────
+      
         private void btnEdGuardar_Click(object sender, EventArgs e)
         {
             if (cmbEdSeleccionar.SelectedIndex == -1 || cmbEdSeleccionar.SelectedValue == null)
@@ -757,7 +724,7 @@ namespace pryAybar.ERP2
             string dni      = txtEdDNI.Text.Trim();
             string pass     = txtEdPassword.Text.Trim();
             string mail     = string.IsNullOrEmpty(txtEdMailLocal.Text.Trim()) ? "" : txtEdMailLocal.Text.Trim() + cmbEdMailDominio.SelectedItem?.ToString();
-            string celular  = string.IsNullOrWhiteSpace(txtEdCelular.Text.Trim()) ? "" : "+54 " + txtEdCelular.Text.Trim();
+            string celular  = csMetodos.NormalizarCelularArgentina(txtEdCelular.Text);
             int idPerfil    = Convert.ToInt32(cmbEdPerfil.SelectedValue);
 
             var contactos = new List<Tuple<string, string, string>>();
@@ -786,7 +753,7 @@ namespace pryAybar.ERP2
             }
         }
 
-        // ─── ED: BAJA ────────────────────────────────────────────────────────────
+        
         private void btnEdBaja_Click(object sender, EventArgs e)
         {
             if (cmbEdSeleccionar.SelectedIndex == -1 || cmbEdSeleccionar.SelectedValue == null)
@@ -818,7 +785,37 @@ namespace pryAybar.ERP2
             }
         }
 
-        // ─── AUDITORÍA (Mejorada con búsqueda) ──────────────────────────────────
+        private void btnEdAlta_Click(object sender, EventArgs e)
+        {
+            if (cmbEdSeleccionar.SelectedIndex == -1 || cmbEdSeleccionar.SelectedValue == null)
+            {
+                MessageBox.Show("Por favor seleccione un usuario para dar de alta.", "AtenciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int idUsuario = Convert.ToInt32(cmbEdSeleccionar.SelectedValue);
+            string userDisplay = cmbEdSeleccionar.Text;
+
+            if (MessageBox.Show($"Â¿EstÃ¡ seguro de dar de alta a '{userDisplay}'?",
+                "Confirmar Alta", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                try
+                {
+                    if (csMetodos.DarDeAltaUsuario(idUsuario))
+                    {
+                        MessageBox.Show("El usuario fue dado de alta correctamente.", "Ã‰xito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        CargarComboUsuariosEdicion();
+                    }
+                    else
+                        MessageBox.Show("No se pudo dar de alta al usuario.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al realizar el alta: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
         private DataTable dtAuditoriaCompleta;
 
         private void CargarAuditoriaGrid()
@@ -852,7 +849,7 @@ namespace pryAybar.ERP2
             { dgvAuditoria.Columns["Detalle"].HeaderText = "Detalle";       dgvAuditoria.Columns["Detalle"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill; }
         }
 
-        // Corrección: búsqueda de auditoría por DNI/usuario, fecha y hora
+        
         private void txtAudBuscar_TextChanged(object sender, EventArgs e)
         {
             FiltrarAuditoria();

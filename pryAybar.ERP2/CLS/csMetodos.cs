@@ -25,10 +25,10 @@ namespace pryAybar.ERP2.CLS
                     cmd.ExecuteNonQuery();
                 }
             }
-            catch (Exception) { /* Fail silently */ }
+            catch (Exception) {}
         }
 
-        public static bool VerificarLogin(string usuario, string contrasenia, out int idUsuario, out string nombreCompleto, out string perfil)
+        public static bool VerificarSesion(string usuario, string contrasenia, out int idUsuario, out string nombreCompleto, out string perfil)
         {
             idUsuario = -1;
             nombreCompleto = "";
@@ -38,7 +38,6 @@ namespace pryAybar.ERP2.CLS
                 OleDbConnection conn = csConexion.GetConnection();
                 if (conn.State == ConnectionState.Closed) conn.Open();
 
-                // 1. Search in Usuario
                 using (OleDbCommand cmd = new OleDbCommand("SELECT [Id_Usuario], [Nombre], [Apellido], [Contraseña], [Activo] FROM [Usuario] WHERE [Nombre] = ? OR [Mail] = ? OR [DNI] = ?", conn))
                 {
                     cmd.Parameters.AddWithValue("?", usuario);
@@ -75,7 +74,6 @@ namespace pryAybar.ERP2.CLS
                     }
                 }
 
-                // 2. Get Profile ID from Relacion Us-Pe (storing IDs as String)
                 string idPerfilStr = "";
                 using (OleDbCommand cmdRel = new OleDbCommand("SELECT [Id_Perfil] FROM [Relacion Us-Pe] WHERE [Id_Usuario] = ?", conn))
                 {
@@ -84,7 +82,6 @@ namespace pryAybar.ERP2.CLS
                     if (res != null) idPerfilStr = res.ToString();
                 }
 
-                // 3. Get Profile Name from Perfil
                 if (!string.IsNullOrEmpty(idPerfilStr))
                 {
                     using (OleDbCommand cmdPerf = new OleDbCommand("SELECT [Nombre] FROM [Perfil] WHERE [Id_Perfil] = ?", conn))
@@ -200,6 +197,25 @@ namespace pryAybar.ERP2.CLS
             return dt;
         }
 
+        public static DataTable ObtenerUsuariosParaEdicion()
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                OleDbConnection conn = csConexion.GetConnection();
+                if (conn.State == ConnectionState.Closed) conn.Open();
+                using (OleDbCommand cmd = new OleDbCommand("SELECT [Id_Usuario], [Nombre] + ' ' + [Apellido] + ' (DNI: ' + [DNI] + ') - ' + IIF([Activo] = 'si', 'Activo', 'Inactivo') AS [Display], [Activo] FROM [Usuario] ORDER BY [Nombre] ASC, [Apellido] ASC", conn))
+                {
+                    using (OleDbDataAdapter adapter = new OleDbDataAdapter(cmd))
+                    {
+                        adapter.Fill(dt);
+                    }
+                }
+            }
+            catch (Exception) { }
+            return dt;
+        }
+
         public static DataRow ObtenerDetalleUsuario(int idUsuario)
         {
             DataTable dt = new DataTable();
@@ -293,7 +309,6 @@ namespace pryAybar.ERP2.CLS
             
             try
             {
-                // 1. Insert into Usuario
                 int newUserId = -1;
                 using (OleDbCommand cmd = new OleDbCommand("INSERT INTO [Usuario] ([Nombre], [Apellido], [DNI], [Contraseña], [Mail], [Activo]) VALUES (?, ?, ?, ?, ?, ?)", conn, transaction))
                 {
@@ -306,13 +321,11 @@ namespace pryAybar.ERP2.CLS
                     cmd.ExecuteNonQuery();
                 }
 
-                // Get ID autonumeric
                 using (OleDbCommand cmdId = new OleDbCommand("SELECT @@IDENTITY", conn, transaction))
                 {
                     newUserId = Convert.ToInt32(cmdId.ExecuteScalar());
                 }
 
-                // 2. Insert into Relacion Us-Pe
                 using (OleDbCommand cmdRel = new OleDbCommand("INSERT INTO [Relacion Us-Pe] ([Id_Usuario], [Id_Perfil]) VALUES (?, ?)", conn, transaction))
                 {
                     cmdRel.Parameters.AddWithValue("?", newUserId.ToString());
@@ -320,7 +333,7 @@ namespace pryAybar.ERP2.CLS
                     cmdRel.ExecuteNonQuery();
                 }
 
-                // 3. Insert Contactos
+                
                 foreach (var contact in contactos)
                 {
                     using (OleDbCommand cmdCont = new OleDbCommand("INSERT INTO [Contacto] ([Id-Usuario], [Numero Celular], [Redes Sociales], [Correo]) VALUES (?, ?, ?, ?)", conn, transaction))
@@ -333,7 +346,6 @@ namespace pryAybar.ERP2.CLS
                     }
                 }
 
-                // 4. Insert Domicilios
                 foreach (var dom in domicilios)
                 {
                     using (OleDbCommand cmdDom = new OleDbCommand("INSERT INTO [Domicilio] ([Id-Usuario], [Nombre], [Numeracion], [Tipo], [Link Maps]) VALUES (?, ?, ?, ?, ?)", conn, transaction))
@@ -373,7 +385,6 @@ namespace pryAybar.ERP2.CLS
             OleDbTransaction transaction = conn.BeginTransaction();
             try
             {
-                // 1. Update Usuario
                 using (OleDbCommand cmd = new OleDbCommand("UPDATE [Usuario] SET [Nombre] = ?, [Apellido] = ?, [DNI] = ?, [Contraseña] = ?, [Mail] = ? WHERE [Id_Usuario] = ?", conn, transaction))
                 {
                     cmd.Parameters.AddWithValue("?", nombre);
@@ -385,7 +396,6 @@ namespace pryAybar.ERP2.CLS
                     cmd.ExecuteNonQuery();
                 }
 
-                // 2. Update Relacion Us-Pe (delete first, then insert)
                 using (OleDbCommand cmdDelRel = new OleDbCommand("DELETE FROM [Relacion Us-Pe] WHERE [Id_Usuario] = ?", conn, transaction))
                 {
                     cmdDelRel.Parameters.AddWithValue("?", idUsuario.ToString());
@@ -398,7 +408,7 @@ namespace pryAybar.ERP2.CLS
                     cmdInsRel.ExecuteNonQuery();
                 }
 
-                // 3. Update Contactos (delete first, then insert)
+               
                 using (OleDbCommand cmdDelCont = new OleDbCommand("DELETE FROM [Contacto] WHERE [Id-Usuario] = ?", conn, transaction))
                 {
                     cmdDelCont.Parameters.AddWithValue("?", idUsuario);
@@ -416,7 +426,7 @@ namespace pryAybar.ERP2.CLS
                     }
                 }
 
-                // 4. Update Domicilios (delete first, then insert)
+               
                 using (OleDbCommand cmdDelDom = new OleDbCommand("DELETE FROM [Domicilio] WHERE [Id-Usuario] = ?", conn, transaction))
                 {
                     cmdDelDom.Parameters.AddWithValue("?", idUsuario);
@@ -461,6 +471,48 @@ namespace pryAybar.ERP2.CLS
             {
                 return false;
             }
+        }
+
+        public static bool DarDeAltaUsuario(int idUsuario)
+        {
+            try
+            {
+                OleDbConnection conn = csConexion.GetConnection();
+                if (conn.State == ConnectionState.Closed) conn.Open();
+                using (OleDbCommand cmd = new OleDbCommand("UPDATE [Usuario] SET [Activo] = 'si' WHERE [Id_Usuario] = ?", conn))
+                {
+                    cmd.Parameters.AddWithValue("?", idUsuario);
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public static string NormalizarCelularArgentina(string texto)
+        {
+            if (string.IsNullOrWhiteSpace(texto)) return "";
+
+            string digitos = new string(texto.Where(char.IsDigit).ToArray());
+            if (digitos == "54" || digitos.Length == 0) return "";
+
+            if (digitos.StartsWith("54"))
+                digitos = digitos.Substring(2);
+
+            return digitos.Length == 0 ? "" : "+54 " + digitos;
+        }
+
+        public static string ObtenerNumeroLocalCelularArgentina(string texto)
+        {
+            if (string.IsNullOrWhiteSpace(texto)) return "";
+
+            string digitos = new string(texto.Where(char.IsDigit).ToArray());
+            if (digitos.StartsWith("54"))
+                digitos = digitos.Substring(2);
+
+            return digitos;
         }
     }
 }
