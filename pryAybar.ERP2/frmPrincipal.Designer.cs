@@ -140,8 +140,11 @@ namespace pryAybar.ERP2
             this.dgvAuditoria = new System.Windows.Forms.DataGridView();
             this.pnlAuditoriaHeader = new System.Windows.Forms.Panel();
             this.btnAudRefrescar = new System.Windows.Forms.Button();
-            this.chkAudFiltrarFecha = new System.Windows.Forms.CheckBox();
-            this.dtpAudFecha = new System.Windows.Forms.DateTimePicker();
+            this.cmbFiltroFecha = new System.Windows.Forms.ComboBox();
+            this.lblAudDesde = new System.Windows.Forms.Label();
+            this.dtpAudDesde = new System.Windows.Forms.DateTimePicker();
+            this.lblAudHasta = new System.Windows.Forms.Label();
+            this.dtpAudHasta = new System.Windows.Forms.DateTimePicker();
             this.lblAudBuscar = new System.Windows.Forms.Label();
             this.txtAudBuscar = new System.Windows.Forms.TextBox();
             this.lblAudTitle = new System.Windows.Forms.Label();
@@ -1663,8 +1666,11 @@ namespace pryAybar.ERP2
             // 
             this.pnlAuditoriaHeader.BackColor = System.Drawing.Color.White;
             this.pnlAuditoriaHeader.Controls.Add(this.btnAudRefrescar);
-            this.pnlAuditoriaHeader.Controls.Add(this.chkAudFiltrarFecha);
-            this.pnlAuditoriaHeader.Controls.Add(this.dtpAudFecha);
+            this.pnlAuditoriaHeader.Controls.Add(this.cmbFiltroFecha);
+            this.pnlAuditoriaHeader.Controls.Add(this.lblAudDesde);
+            this.pnlAuditoriaHeader.Controls.Add(this.dtpAudDesde);
+            this.pnlAuditoriaHeader.Controls.Add(this.lblAudHasta);
+            this.pnlAuditoriaHeader.Controls.Add(this.dtpAudHasta);
             this.pnlAuditoriaHeader.Controls.Add(this.lblAudBuscar);
             this.pnlAuditoriaHeader.Controls.Add(this.txtAudBuscar);
             this.pnlAuditoriaHeader.Controls.Add(this.lblAudTitle);
@@ -1690,46 +1696,82 @@ namespace pryAybar.ERP2
             this.btnAudRefrescar.UseVisualStyleBackColor = false;
             this.btnAudRefrescar.Click += new System.EventHandler(this.btnAudRefrescar_Click);
             // 
-            // chkAudFiltrarFecha
+            // cmbFiltroFecha
             // 
-            this.chkAudFiltrarFecha.AutoSize = true;
-            this.chkAudFiltrarFecha.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkAudFiltrarFecha.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(120)))), ((int)(((byte)(135)))));
-            this.chkAudFiltrarFecha.Location = new System.Drawing.Point(480, 45);
-            this.chkAudFiltrarFecha.Name = "chkAudFiltrarFecha";
-            this.chkAudFiltrarFecha.Size = new System.Drawing.Size(109, 19);
-            this.chkAudFiltrarFecha.TabIndex = 3;
-            this.chkAudFiltrarFecha.Text = "Filtrar por fecha";
-            this.chkAudFiltrarFecha.CheckedChanged += new System.EventHandler(this.chkAudFiltrarFecha_CheckedChanged);
+            this.cmbFiltroFecha.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbFiltroFecha.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbFiltroFecha.FormattingEnabled = true;
+            this.cmbFiltroFecha.Items.AddRange(new object[] {
+            "Sin Filtro",
+            "Fecha Única",
+            "Rango de Fechas"});
+            this.cmbFiltroFecha.Location = new System.Drawing.Point(260, 45);
+            this.cmbFiltroFecha.Name = "cmbFiltroFecha";
+            this.cmbFiltroFecha.Size = new System.Drawing.Size(115, 23);
+            this.cmbFiltroFecha.TabIndex = 3;
+            this.cmbFiltroFecha.SelectedIndexChanged += new System.EventHandler(this.cmbFiltroFecha_SelectedIndexChanged);
             // 
-            // dtpAudFecha
+            // lblAudDesde
             // 
-            this.dtpAudFecha.Enabled = false;
-            this.dtpAudFecha.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpAudFecha.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpAudFecha.Location = new System.Drawing.Point(590, 45);
-            this.dtpAudFecha.Name = "dtpAudFecha";
-            this.dtpAudFecha.Size = new System.Drawing.Size(150, 23);
-            this.dtpAudFecha.TabIndex = 4;
-            this.dtpAudFecha.ValueChanged += new System.EventHandler(this.dtpAudFecha_ValueChanged);
+            this.lblAudDesde.AutoSize = true;
+            this.lblAudDesde.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAudDesde.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(120)))), ((int)(((byte)(135)))));
+            this.lblAudDesde.Location = new System.Drawing.Point(380, 48);
+            this.lblAudDesde.Name = "lblAudDesde";
+            this.lblAudDesde.Size = new System.Drawing.Size(43, 15);
+            this.lblAudDesde.TabIndex = 5;
+            this.lblAudDesde.Text = "Desde:";
+            // 
+            // dtpAudDesde
+            // 
+            this.dtpAudDesde.Enabled = false;
+            this.dtpAudDesde.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpAudDesde.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpAudDesde.Location = new System.Drawing.Point(430, 45);
+            this.dtpAudDesde.Name = "dtpAudDesde";
+            this.dtpAudDesde.Size = new System.Drawing.Size(110, 23);
+            this.dtpAudDesde.TabIndex = 4;
+            this.dtpAudDesde.ValueChanged += new System.EventHandler(this.dtpAudDesde_ValueChanged);
+            // 
+            // lblAudHasta
+            // 
+            this.lblAudHasta.AutoSize = true;
+            this.lblAudHasta.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAudHasta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(120)))), ((int)(((byte)(135)))));
+            this.lblAudHasta.Location = new System.Drawing.Point(550, 48);
+            this.lblAudHasta.Name = "lblAudHasta";
+            this.lblAudHasta.Size = new System.Drawing.Size(40, 15);
+            this.lblAudHasta.TabIndex = 6;
+            this.lblAudHasta.Text = "Hasta:";
+            // 
+            // dtpAudHasta
+            // 
+            this.dtpAudHasta.Enabled = false;
+            this.dtpAudHasta.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpAudHasta.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpAudHasta.Location = new System.Drawing.Point(600, 45);
+            this.dtpAudHasta.Name = "dtpAudHasta";
+            this.dtpAudHasta.Size = new System.Drawing.Size(140, 23);
+            this.dtpAudHasta.TabIndex = 7;
+            this.dtpAudHasta.ValueChanged += new System.EventHandler(this.dtpAudHasta_ValueChanged);
             // 
             // lblAudBuscar
             // 
             this.lblAudBuscar.AutoSize = true;
             this.lblAudBuscar.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAudBuscar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(120)))), ((int)(((byte)(135)))));
-            this.lblAudBuscar.Location = new System.Drawing.Point(270, 28);
+            this.lblAudBuscar.Location = new System.Drawing.Point(20, 48);
             this.lblAudBuscar.Name = "lblAudBuscar";
-            this.lblAudBuscar.Size = new System.Drawing.Size(47, 15);
+            this.lblAudBuscar.Size = new System.Drawing.Size(45, 15);
             this.lblAudBuscar.TabIndex = 5;
             this.lblAudBuscar.Text = "Buscar:";
             // 
             // txtAudBuscar
             // 
             this.txtAudBuscar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAudBuscar.Location = new System.Drawing.Point(270, 45);
+            this.txtAudBuscar.Location = new System.Drawing.Point(70, 45);
             this.txtAudBuscar.Name = "txtAudBuscar";
-            this.txtAudBuscar.Size = new System.Drawing.Size(200, 23);
+            this.txtAudBuscar.Size = new System.Drawing.Size(180, 23);
             this.txtAudBuscar.TabIndex = 2;
             this.txtAudBuscar.TextChanged += new System.EventHandler(this.txtAudBuscar_TextChanged);
             // 
@@ -1997,8 +2039,11 @@ namespace pryAybar.ERP2
         private System.Windows.Forms.Button btnAudRefrescar;
         private System.Windows.Forms.TextBox txtAudBuscar;
         private System.Windows.Forms.Label lblAudBuscar;
-        private System.Windows.Forms.DateTimePicker dtpAudFecha;
-        private System.Windows.Forms.CheckBox chkAudFiltrarFecha;
+        private System.Windows.Forms.Label lblAudDesde;
+        private System.Windows.Forms.DateTimePicker dtpAudDesde;
+        private System.Windows.Forms.Label lblAudHasta;
+        private System.Windows.Forms.DateTimePicker dtpAudHasta;
+        private System.Windows.Forms.ComboBox cmbFiltroFecha;
         private System.Windows.Forms.DataGridView dgvAuditoria;
         private System.Windows.Forms.Panel pnlConCard;
         private System.Windows.Forms.Panel pnlConStatusIndicator;

@@ -110,6 +110,9 @@ namespace pryAybar.ERP2
             cmbAgLocalidad.Enabled = false;
             cmbAgProvincia.SelectedIndexChanged += CmbAgProvincia_SelectedIndexChanged;
 
+            // Inicializar combo de filtro de fecha de auditoría
+            cmbFiltroFecha.SelectedIndex = 0;
+
             // 5. Default Navigation tab
             ShowPanel(pnlAgregar);
 
@@ -855,14 +858,46 @@ namespace pryAybar.ERP2
             FiltrarAuditoria();
         }
 
-        private void dtpAudFecha_ValueChanged(object sender, EventArgs e)
+        private void dtpAudDesde_ValueChanged(object sender, EventArgs e)
         {
+            if (cmbFiltroFecha.SelectedIndex == 2 && dtpAudDesde.Value > dtpAudHasta.Value)
+            {
+                dtpAudHasta.Value = dtpAudDesde.Value;
+            }
             FiltrarAuditoria();
         }
 
-        private void chkAudFiltrarFecha_CheckedChanged(object sender, EventArgs e)
+        private void dtpAudHasta_ValueChanged(object sender, EventArgs e)
         {
-            dtpAudFecha.Enabled = chkAudFiltrarFecha.Checked;
+            if (cmbFiltroFecha.SelectedIndex == 2 && dtpAudHasta.Value < dtpAudDesde.Value)
+            {
+                dtpAudDesde.Value = dtpAudHasta.Value;
+            }
+            FiltrarAuditoria();
+        }
+
+        private void cmbFiltroFecha_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbFiltroFecha.SelectedIndex == 0) // Sin Filtro
+            {
+                dtpAudDesde.Enabled = false;
+                dtpAudHasta.Enabled = false;
+            }
+            else if (cmbFiltroFecha.SelectedIndex == 1) // Fecha Única
+            {
+                dtpAudDesde.Enabled = true;
+                dtpAudHasta.Enabled = false;
+            }
+            else if (cmbFiltroFecha.SelectedIndex == 2) // Rango de Fechas
+            {
+                dtpAudDesde.Enabled = true;
+                dtpAudHasta.Enabled = true;
+                // Al activar rango, validar la relación
+                if (dtpAudDesde.Value > dtpAudHasta.Value)
+                {
+                    dtpAudHasta.Value = dtpAudDesde.Value;
+                }
+            }
             FiltrarAuditoria();
         }
 
@@ -876,10 +911,17 @@ namespace pryAybar.ERP2
             if (!string.IsNullOrEmpty(buscar))
                 filtro = $"(Convert([Usuario], 'System.String') LIKE '%{buscar}%')";
 
-            if (chkAudFiltrarFecha.Checked)
+            if (cmbFiltroFecha.SelectedIndex == 1) // Fecha Única (Desde)
             {
-                string fecha = dtpAudFecha.Value.ToString("yyyy-MM-dd");
-                string filtrF = $"Convert([Fecha], 'System.String') LIKE '%{dtpAudFecha.Value:dd/MM/yyyy}%'";
+                string desde = dtpAudDesde.Value.ToString("yyyy-MM-dd");
+                string filtrF = $"[Fecha] = #{desde}#";
+                filtro = string.IsNullOrEmpty(filtro) ? filtrF : filtro + " AND " + filtrF;
+            }
+            else if (cmbFiltroFecha.SelectedIndex == 2) // Rango de Fechas (Desde - Hasta)
+            {
+                string desde = dtpAudDesde.Value.ToString("yyyy-MM-dd");
+                string hasta = dtpAudHasta.Value.ToString("yyyy-MM-dd");
+                string filtrF = $"[Fecha] >= #{desde}# AND [Fecha] <= #{hasta}#";
                 filtro = string.IsNullOrEmpty(filtro) ? filtrF : filtro + " AND " + filtrF;
             }
 
@@ -896,7 +938,9 @@ namespace pryAybar.ERP2
         private void btnAudRefrescar_Click(object sender, EventArgs e)
         {
             txtAudBuscar.Clear();
-            chkAudFiltrarFecha.Checked = false;
+            cmbFiltroFecha.SelectedIndex = 0;
+            dtpAudDesde.Value = DateTime.Today;
+            dtpAudHasta.Value = DateTime.Today;
             CargarAuditoriaGrid();
         }
 
